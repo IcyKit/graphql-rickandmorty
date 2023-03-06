@@ -1,0 +1,18 @@
+type EpisodeID {
+  id: ID!
+}
+
+type Character {
+  id: ID!
+  name: String!
+  status: String!
+  species: String!
+  type: String!
+  gender: String!
+  image: String!
+  episode: [EpisodeID!]!
+}
+
+type Query {
+  characters: [Character!]!
+}
