@@ -13,8 +13,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@apollo/federation": "^0.38.1",
+    "@apollo/gateway": "^2.3.3",
     "@apollo/server": "^4.4.1",
-    "graphql": "^16.6.0"
+    "@apollo/server-plugin-landing-page-graphql-playground": "^4.0.0",
+    "@apollo/subgraph": "^2.3.3",
+    "dotenv": "^16.0.3",
+    "esm": "^3.2.25",
+    "graphql": "^16.6.0",
+    "mongoose": "^7.0.1"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "3.2.1",

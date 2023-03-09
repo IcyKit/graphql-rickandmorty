@@ -1,10 +1,7 @@
 import { ApolloServer } from "@apollo/server";
 import { resolvers } from "./resolvers.js";
-import { readFileSync } from "fs";
-const typeDefs = readFileSync("./dist/src/episodes/schema.graphql", {
-    encoding: "utf-8",
-});
+import { buildSubgraphSchema } from "@apollo/federation";
+import { typeDefs } from "./schema.js";
 export const server = new ApolloServer({
-    typeDefs,
-    resolvers,
+    schema: buildSubgraphSchema({ typeDefs, resolvers })
 });

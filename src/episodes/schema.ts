@@ -1,3 +1,6 @@
+import gql from 'graphql-tag';
+
+export const typeDefs = gql`
 type CharacterID {
   id: ID!
 }
@@ -13,3 +16,4 @@ type Episode {
 type Query {
   episodes: [Episode!]!
 }
+`
