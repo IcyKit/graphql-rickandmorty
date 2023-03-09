@@ -9,6 +9,9 @@ import {
 } from "@apollo/gateway";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "@apollo/server-plugin-landing-page-graphql-playground";
 import mongoose from "mongoose";
+import dotenv from 'dotenv'
+
+dotenv.config();
 
 export const startCharactersServer = async () => {
   const { url } = await startStandaloneServer(charactersServer, {
@@ -51,7 +54,7 @@ const gateway = new ApolloGateway({
 });
 
 const startApolloServer = async () => {
-  await mongoose.connect("mongodb://127.0.0.1:27017/RickAndMorty");
+  await mongoose.connect(`mongodb://${process.env.MONGO_URL}:${process.env.MONGO_PORT}/${process.env.MONGO_DB}`);
   const server = new ApolloServer({
     gateway,
     plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
