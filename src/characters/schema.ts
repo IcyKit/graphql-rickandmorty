@@ -1,11 +1,11 @@
 import gql from 'graphql-tag'
 
 export const typeDefs = gql`
-type EpisodeID {
-  id: ID!
+extend type Episode @key(fields: "id") {
+  id: ID! @external
 }
 
-type Character {
+type Character @key(fields: "id") {
   id: ID!
   name: String!
   status: String!
@@ -13,10 +13,12 @@ type Character {
   type: String!
   gender: String!
   image: String!
-  episode: [EpisodeID!]!
+  episodes: [Episode!]!
+  episode: Episode!
 }
 
 type Query {
   characters: [Character!]!
+  character(id: ID!): Character!
 }
 `;

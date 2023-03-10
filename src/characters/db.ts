@@ -7,7 +7,8 @@ const characterSchema = new mongoose.Schema({
   type: String,
   gender: String,
   image: String,
-  episode: [{id: String}]
+  episodes: [{id: String}],
+  episode: String
 });
 
 export const Character = mongoose.model('Characters', characterSchema);

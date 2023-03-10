@@ -5,7 +5,8 @@ const episodeSchema = new mongoose.Schema({
   name: String,
   air_date: String,
   episode: String,
-  characters: [{id: String}]
+  characters: [{id: String}],
+  character: String
 })
 
 export const Episode = mongoose.model('Episodes', episodeSchema);
