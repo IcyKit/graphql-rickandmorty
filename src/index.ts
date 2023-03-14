@@ -9,7 +9,8 @@ import {
 } from "@apollo/gateway";
 import { ApolloServerPluginLandingPageGraphQLPlayground } from "@apollo/server-plugin-landing-page-graphql-playground";
 import mongoose from "mongoose";
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
+import { UUIDDefinition } from 'graphql-scalars';
 
 dotenv.config();
 

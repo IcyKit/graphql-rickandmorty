@@ -10,11 +10,38 @@ type Episode @key(fields: "id") {
   name: String!
   air_date: String!
   characters: [Character!]!
-  character: Character!
 }
+
+input EpisodeInput {
+  name: String!
+  air_date: String!
+}
+
+input EpisodeUpdateInput {
+  name: String
+  air_date: String
+}
+
+type DuplicateEpisodeError {
+  message: String!
+  duplicateEpisode: Episode!
+}
+
+type NotFoundError {
+  message: String!
+}
+
+union ReturnEpisode = Episode | DuplicateEpisodeError
+union ReturnEpisodeById = Episode | NotFoundError
 
 type Query {
   episodes: [Episode!]!
-  episode(id: ID!): Episode!
+  episode(id: ID!): ReturnEpisodeById!
+}
+
+type Mutation {
+  createEpisode(ep: EpisodeInput): ReturnEpisode
+  deleteEpisode(id: ID!): Episode
+  updateEpisode(id: ID!, ep: EpisodeUpdateInput): Episode
 }
 `

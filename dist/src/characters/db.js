@@ -5,6 +5,7 @@ const characterSchema = new mongoose.Schema({
     status: String,
     type: String,
     gender: String,
+    species: String,
     image: String,
     episodes: [{ id: String }],
     episode: String
