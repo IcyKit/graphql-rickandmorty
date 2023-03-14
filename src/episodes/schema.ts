@@ -1,12 +1,14 @@
 import gql from 'graphql-tag';
 
 export const typeDefs = gql`
+scalar UUID
+
 extend type Character @key(fields: "id") {
-  id: ID! @external
+  id: UUID! @external
 }
 
 type Episode @key(fields: "id") {
-  id: ID!
+  id: UUID!
   name: String!
   air_date: String!
   characters: [Character!]!
@@ -36,12 +38,12 @@ union ReturnEpisodeById = Episode | NotFoundError
 
 type Query {
   episodes: [Episode!]!
-  episode(id: ID!): ReturnEpisodeById!
+  episode(id: UUID!): ReturnEpisodeById!
 }
 
 type Mutation {
   createEpisode(ep: EpisodeInput): ReturnEpisode
-  deleteEpisode(id: ID!): Episode
-  updateEpisode(id: ID!, ep: EpisodeUpdateInput): Episode
+  deleteEpisode(id: UUID!): Episode
+  updateEpisode(id: UUID!, ep: EpisodeUpdateInput): Episode
 }
 `

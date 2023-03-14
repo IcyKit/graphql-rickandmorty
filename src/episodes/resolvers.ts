@@ -1,6 +1,8 @@
 import { createEpisode, deleteEpisode, getEpisode, getEpisodes, updateEpisode } from "./model.js";
+import { UUIDResolver } from "graphql-scalars";
 
 export const resolvers = {
+  UUID: UUIDResolver,
   Query: {
     episodes: () => getEpisodes(),
     episode: (_, {id}) => getEpisode(id)

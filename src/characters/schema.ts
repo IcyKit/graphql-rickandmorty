@@ -4,11 +4,11 @@ export const typeDefs = gql`
 scalar UUID
 
 extend type Episode @key(fields: "id") {
-  id: ID! @external
+  id: UUID! @external
 }
 
 type Character @key(fields: "id") {
-  id: ID!
+  id: UUID!
   name: String!
   status: String!
   species: String!
@@ -50,12 +50,12 @@ union ReturnCharacterById = Character | NotFoundError
 
 type Query {
   characters: [Character!]!
-  character(id: ID!): ReturnCharacterById!
+  character(id: UUID!): ReturnCharacterById!
 }
 
 type Mutation {
   createCharacter(char: CharacterInput): ReturnCharacter
-  deleteCharacter(id: ID!): Character
-  updateCharacter(id: ID!, char: CharacterUpdateInput): Character
+  deleteCharacter(id: UUID!): Character
+  updateCharacter(id: UUID!, char: CharacterUpdateInput): Character
 }
 `;
