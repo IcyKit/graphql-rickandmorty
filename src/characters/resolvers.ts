@@ -1,10 +1,12 @@
 import { getCharacters, getCharacter, createCharacter, deleteCharacter, updateCharacter } from "./model.js";
 import { UUIDResolver } from "graphql-scalars";
+import { TimestampResolver } from "graphql-scalars";
 
 export const resolvers = {
   UUID: UUIDResolver,
+  Timestamp: TimestampResolver,
   Query: {
-    characters: () => getCharacters(),
+    characters: (_, {limit, after, before}) => getCharacters(limit, after, before),
     character: (_, {id}) => getCharacter(id)
   },
   Mutation: {

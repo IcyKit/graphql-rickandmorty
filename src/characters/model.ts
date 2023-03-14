@@ -1,8 +1,45 @@
 import { Character } from "./db.js";
 import { v4 as uuidv4 } from 'uuid';
+import { base64decode, base64encode } from "nodejs-base64";
 
-export const getCharacters = async () => {
-  return await Character.find({});
+export const getCharacters = async (limit: number, after?: string | null, before?: string | null) => {
+  if (after) {
+    const date = Number(base64decode(after));
+    const characters = await Character.find({}).where('createdAt').gt(date).limit(limit + 1)
+    console.log(characters)
+    return {
+      edges: characters.slice(0, limit),
+      pageInfo: {
+        startCursor: base64encode(characters[0].createdAt),
+        endCursor: base64encode(characters[characters.length - 2].createdAt),
+        hasNextPage: characters.length > limit,
+        hasPrevPage: true
+      }
+    }
+  } else if (before) {
+    const date = Number(base64decode(before));
+    const characters = await Character.find({}).where('createdAt').lt(date).limit(limit + 1).sort({createdAt: -1})
+    return {
+      edges: characters.slice(0, limit),
+      pageInfo: {
+        startCursor: base64encode(characters[0].createdAt),
+        endCursor: base64encode(characters[characters.length - 2].createdAt),
+        hasNextPage: true,
+        hasPrevPage: characters.length > limit
+      }
+    }
+  } else {
+    const characters = await Character.find({}).limit(limit + 1);
+    return {
+      edges: characters.slice(0, limit),
+      pageInfo: {
+        startCursor: base64encode(characters[0].createdAt),
+        hasPrevPage: false,
+        endCursor: base64encode(characters[characters.length - 2].createdAt),
+        hasNextPage: characters.length > limit
+      }
+    }
+  }
 };
 
 export const getCharacter = async (id: string) => {
@@ -24,7 +61,8 @@ export const createCharacter = async (char) => {
       duplicateCharacter
     }
   }
-  const character = await new Character({...char, id}).save();
+  const createdAt = Date.now();
+  const character = await new Character({...char, id, createdAt}).save();
   return character;
 }
 
